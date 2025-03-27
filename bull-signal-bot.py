@@ -1,8 +1,18 @@
+"""
+Stock Upgrade Notifier Script
+Author: Eduardo Guillen
+Date: March 25, 2025
+Description: This script fetches daily stock upgrades from a financial API 
+             and sends a scheduled email notification with the results. 
+             Eventually this script will send other types of notifications.
+"""
+
 import requests
 import schedule
 import time
 import smtplib
 import os
+import json
 from email.mime.text import MIMEText
 from datetime import datetime
 
@@ -19,7 +29,8 @@ def fetch_stock_upgrades():
         response = requests.get(url)
         if response.status_code == 200:
             data = response.json()
-            upgrades = [item for item in data if item.get('action') == 'Upgrade']
+            print(json.dumps(data, indent=3))
+            upgrades = [item for item in data if item.get('newGrade') == item.get('previousGrade')]
             
             if upgrades:
                 message = "Stock Upgrades Today:\n\n"
@@ -59,10 +70,14 @@ def send_email(subject, body):
     except Exception as e:
         print(f"Failed to send email: {e}")
 
-# Schedule the task at 6:15 AM PDT
+# Uncomment the below to test on the fly
+#fetch_stock_upgrades()
+
+# Schedule the task at 6:15 AM PDT before the market open
 schedule.every().day.at("06:15").do(fetch_stock_upgrades)
 
 print("Scheduler started. Running daily at 6:15 AM PDT.")
 while True:
     schedule.run_pending()
     time.sleep(60)
+    
