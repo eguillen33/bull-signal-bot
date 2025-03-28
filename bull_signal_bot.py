@@ -17,7 +17,7 @@ from email.mime.text import MIMEText
 from datetime import datetime
 
 # Configuration
-API_KEY = os.environ["BENZINGA_API_KEY"]
+API_KEY = os.environ["FMP_API_KEY"]
 EMAIL_SENDER = os.environ["EMAIL"]
 EMAIL_RECEIVER = os.environ["EMAIL"]
 EMAIL_PASSWORD = os.environ["EMAIL_PASSWORD"]
