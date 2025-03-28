@@ -4,7 +4,7 @@
 
 Bull Signal Bot is a Python-based automated stock alert system that fetches and processes financial data to identify potential bullish and bearish stock signals. It integrates with the FinancialModelingPrep API to retrieve stock upgrades and downgrades, then filters and notifies users based on predefined conditions. Note that I am aware the name of this application - _Bull Signal Bot_ - is a slight misnomer.
 
-⚠ **Warning:** This project uses FinancialModelingPrep. Ensure you obtain an API key from [FinancialModelingPrep](https://financialmodelingprep.com/) and configure it accordingly.
+⚠ **Important:** This project uses FinancialModelingPrep. Ensure you obtain an API key from [FinancialModelingPrep](https://financialmodelingprep.com/) and configure it accordingly.
 
 ## Features
 
