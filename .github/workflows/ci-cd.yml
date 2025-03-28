@@ -1,4 +1,4 @@
-name: Basic CI/CD Pipeline
+name: Bull Signal Bot CI/CD Pipeline
 
 on:
   push:

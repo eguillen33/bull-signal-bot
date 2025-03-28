@@ -55,7 +55,7 @@ Ensure you have the following installed:
 Run the bot manually:
 
 ```sh
-python bull-signal-bot.py
+python bull_signal_bot.py
 ```
 
 ## Automating Execution with `crontab` (Linux Users)
@@ -68,7 +68,7 @@ To schedule the script to run automatically, follow these steps:
    ```
 2. Add the following line to run the bot every hour:
    ```sh
-   0 * * * * /usr/bin/python3 /path/to/bull-signal-bot.py >> /path/to/bull-signal-bot.log 2>&1
+   0 * * * * /usr/bin/python3 /path/to/bull_signal_bot.py >> /path/to/bull_signal_bot.log 2>&1
    ```
 
 ### Advisory for Linux Users
@@ -76,11 +76,11 @@ To schedule the script to run automatically, follow these steps:
 - Use the full path to Python to avoid environment issues.
 - Ensure the script has execute permissions:
   ```sh
-  chmod +x bull-signal-bot.py
+  chmod +x bull_signal_bot.py
   ```
 - If using a virtual environment, reference the Python binary inside `venv`:
   ```sh
-  0 * * * * /path/to/venv/bin/python /path/to/bull-signal-bot.py >> /path/to/bull-signal-bot.log 2>&1
+  0 * * * * /path/to/venv/bin/python /path/to/bull_signal_bot.py >> /path/to/bull_signal_bot.log 2>&1
   ```
 - To check if cron is running the script, view logs:
   ```sh
