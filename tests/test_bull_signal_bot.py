@@ -5,7 +5,7 @@ import requests
 import os
 from datetime import datetime
 import sys
-sys.path.insert(0, os.path.abspath(os.path.dirname(__file__) + "/.."))
+sys.path.insert(0, ".")
 from bull_signal_bot import fetch_stock_grade_changes, send_email
 
 class TestBullSignalBot(unittest.TestCase):

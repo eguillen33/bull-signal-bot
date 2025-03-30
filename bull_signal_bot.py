@@ -8,8 +8,6 @@ Description: This script fetches daily stock grade changes from a financial API
 """
 
 import requests
-import schedule
-import time
 import smtplib
 import os
 import json
@@ -70,14 +68,4 @@ def send_email(subject, body):
     except Exception as e:
         print(f"Failed to send email: {e}")
 
-# Uncomment the below to test on the fly
-#fetch_stock_grade_changes()
-
-# Schedule the task at 6:15 AM PDT before the market open
-schedule.every().day.at("06:15").do(fetch_stock_grade_changes)
-
-print("Scheduler started. Running daily at 6:15 AM PDT.")
-while True:
-    schedule.run_pending()
-    time.sleep(60)
-    
+fetch_stock_grade_changes()
