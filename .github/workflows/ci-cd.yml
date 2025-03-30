@@ -1,12 +1,34 @@
 name: Bull Signal Bot CI/CD Pipeline
 
 on:
+  pull_request:
+    branches:
+      - main
   push:
     branches:
       - main
-  pull_request:
 
 jobs:
+  lint:
+    name: Code Linting
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+    
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install flake8
+
+      - name: Run Flake8 (Code Smell & Style Check)
+        run: flake8 .
+
   test:
     name: Run Tests
     runs-on: ubuntu-latest
