@@ -99,7 +99,7 @@ jobs:
         uses: actions/setup-python@v4
 
       - name: Build Docker Image
-        run: docker build -t bull-signal-bot:latest ../
+        run: docker build -f ../Dockerfile -t bull-signal-bot:latest .
 
   image-scan:
     name: Docker Image Security Scan
