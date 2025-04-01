@@ -60,9 +60,13 @@ python bull_signal_bot.py
    docker build -t bull-signal-bot:latest .
    ```
 
-2. Run the container and pass your API key as an environment variable:
+2. Run the container and pass your API key and other args as environment variables:
    ```
-   docker run --rm -e FMP_API_KEY=your_api_key_here bull-signal-bot
+   docker run --rm \
+     -e EMAIL_USERNAME=you@gmail.com \
+     -e EMAIL_PASSWORD=your_app_password \
+     -e FMP_API_KEY=your_api_key \
+     bull-signal-bot
    ```
    💡 Tip: You can also use --env-file .env if you'd rather load environment variables from a file.
 
