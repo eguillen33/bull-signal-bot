@@ -20,72 +20,54 @@ Ensure you have the following installed:
 - Python 3.10+
 - `pip` (Python package manager)
 - `requests` and other dependencies (install via `requirements.txt`)
+- [Docker](https://docs.docker.com/get-docker/) (for containerized execution)
 
-## Installation
+## Installation (Local Python)
 
 1. Clone the repository:
 
    ```sh
    git clone https://github.com/yourusername/bull-signal-bot.git
    cd bull-signal-bot
-   ```
 
 2. Create a virtual environment (optional but recommended):
-
-   ```sh
-   python -m venv venv
+   ```python -m venv venv
    source venv/bin/activate  # On Windows use: venv\Scripts\activate
-   ```
 
 3. Install dependencies:
-
-   ```sh
-   pip install -r requirements.txt
-   ```
+   ```pip install -r requirements.txt
 
 4. Set up your API credentials:
-
-   - Create a `.env` file in the project root and add your API key:
-     ```env
-     FMP_API_KEY=your_api_key_here
-     ```
+   ```FMP_API_KEY=your_api_key_here
 
 ## Usage
+### Run Manually with Python
+`python bull_signal_bot.py`
 
-Run the bot manually:
+### Running with Docker
 
-```sh
-python bull_signal_bot.py
-```
+1. Build the Docker image:
+   ```docker build -t bull-signal-bot:latest .
 
-## Automating Execution with `crontab` (Linux Users)
+2. Run the container and pass your API key as an environment variable:
+   ```docker run --rm -e FMP_API_KEY=your_api_key_here bull-signal-bot
+   💡 Tip: You can also use --env-file .env if you'd rather load environment variables from a file.
 
-To schedule the script to run automatically, follow these steps:
+## Automating Execution with crontab (Linux)
 
-1. Open the crontab editor:
-   ```sh
-   crontab -e
-   ```
-2. Add the following line to run the bot every hour:
-   ```sh
-   0 * * * * /usr/bin/python3 /path/to/bull_signal_bot.py >> /path/to/bull_signal_bot.log 2>&1
-   ```
+You can schedule the bot to run automatically using cron:
 
-### Advisory for Linux Users
+1. Open your crontab:
+   ```crontab -e
 
-- Use the full path to Python to avoid environment issues.
-- Ensure the script has execute permissions:
-  ```sh
-  chmod +x bull_signal_bot.py
-  ```
-- If using a virtual environment, reference the Python binary inside `venv`:
-  ```sh
-  0 * * * * /path/to/venv/bin/python /path/to/bull_signal_bot.py >> /path/to/bull_signal_bot.log 2>&1
-  ```
-- To check if cron is running the script, view logs:
-  ```sh
-  cat /var/log/syslog | grep CRON
-  ```
+2. Add a line like this to run it every hour:
+   ```0 * * * * /usr/bin/python3 /path/to/bull_signal_bot.py >> /path/to/bull_signal_bot.log 2>&1
+
+## Tips
+
+- Use the full path to Python (use which python3 to find it).
+- Make the script executable: `chmod +x bull_signal_bot.py`
+- To check if the script is running via cron: `cat /var/log/syslog | grep CRON`
 
 ## License
 
