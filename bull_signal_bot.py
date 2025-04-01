@@ -25,7 +25,7 @@ def fetch_stock_grade_changes():
     url = f"https://financialmodelingprep.com/stable/grades-latest-news?apikey={API_KEY}"
 
     try:
-        response = requests.get(url)
+        response = requests.get(url, timeout=(5))
         if response.status_code == 200:
             data = response.json()
             print(json.dumps(data, indent=3))

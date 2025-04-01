@@ -114,7 +114,7 @@ jobs:
         with:
           image-ref: "bull-signal-bot:latest"
           format: "table"
-          severity: "WARNING, CRITICAL, HIGH"
+          severity: "CRITICAL, HIGH"
 
   deploy:
     name: Deploy Application
