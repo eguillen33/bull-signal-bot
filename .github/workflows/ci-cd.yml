@@ -98,6 +98,9 @@ jobs:
       - name: Checkout repository
         uses: actions/setup-python@v4
 
+      - name: List files in context
+        run: ls -la
+
       - name: Build Docker Image
         run: docker build -f ../Dockerfile -t bull-signal-bot:latest .
 
