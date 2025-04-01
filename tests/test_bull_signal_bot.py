@@ -30,6 +30,11 @@ class TestBullSignalBot(unittest.TestCase):
             "Stock Grade Changes Today:\n\nAAPL - Goldman Sachs upgraded from Hold to Buy\nGOOG - Morgan Stanley upgraded from Sell to Hold\n"
         )
         
+        # Ensure correct content is written to file
+        mock_file().write.assert_called_once_with(
+            "Stock Grade Changes Today:\n\nAAPL - Goldman Sachs upgraded from Hold to Buy\nGOOG - Morgan Stanley upgraded from Sell to Hold\n"
+        )
+        
     @patch("bull_signal_bot.requests.get")  # Mock API requests
     @patch("bull_signal_bot.send_email")    # Mock email function
     def test_fetch_stock_grade_changes_empty(self, mock_send_email, mock_requests_get):
