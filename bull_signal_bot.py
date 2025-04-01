@@ -63,10 +63,11 @@ def send_email(subject, body):
         msg["To"] = EMAIL_RECEIVER
 
         with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
+            server.starttls()
             server.login(EMAIL_SENDER, EMAIL_PASSWORD)
-            server.sendmail(EMAIL_SENDER, EMAIL_RECEIVER, msg.as_string())
+            server.send_message(msg)
 
-        print("Email sent successfully.")
+        print("Email sent!")
 
     except Exception as e:
         print(f"Failed to send email: {e}")

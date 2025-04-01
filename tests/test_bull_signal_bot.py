@@ -63,6 +63,13 @@ class TestBullSignalBot(unittest.TestCase):
         
         # Check the exact expected output
         mock_print.assert_any_call("Failed to retrieve stock grade changes. Status Code: 500")
+        
+    @patch("bull_signal_bot.requests.get", side_effect=Exception("Connection timed out"))
+    def test_fetch_stock_grade_changes_timeout(self, mock_requests_get):
+        """Test handling of a timeout during the API request."""
+        with patch("builtins.print") as mock_print:
+            fetch_stock_grade_changes()
+        mock_print.assert_any_call("Error fetching stock grade changes: Connection timed out")
 
     @patch("bull_signal_bot.smtplib.SMTP_SSL")
     def test_send_email_success(self, mock_smtp):
@@ -74,7 +81,7 @@ class TestBullSignalBot(unittest.TestCase):
         send_email("Test Subject", "Test Body")
         
         mock_server.login.assert_called_once_with(os.environ["EMAIL"], os.environ["EMAIL_PASSWORD"])
-        mock_server.sendmail.assert_called_once()
+        mock_server.send_message.assert_called_once()
     
     @patch("bull_signal_bot.smtplib.SMTP_SSL")
     def test_send_email_failure(self, mock_smtp):
