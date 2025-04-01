@@ -20,6 +20,7 @@ EMAIL_SENDER = os.environ["EMAIL"]
 EMAIL_RECEIVER = os.environ["EMAIL"]
 EMAIL_PASSWORD = os.environ["EMAIL_PASSWORD"]
 
+
 def fetch_stock_grade_changes():
     url = f"https://financialmodelingprep.com/stable/grades-latest-news?apikey={API_KEY}"
 
@@ -28,12 +29,12 @@ def fetch_stock_grade_changes():
         if response.status_code == 200:
             data = response.json()
             print(json.dumps(data, indent=3))
-            grade_changes = [item for item in data if item.get('newGrade') == item.get('previousGrade')]
+            grade_changes = [item for item in data if item.get('newGrade') != item.get('previousGrade')]
             
             if grade_changes:
                 message = "Stock Grade Changes Today:\n\n"
                 for stock in grade_changes:
-                    message += f"{stock['symbol']} - {stock['gradingCompany']} upgraded from {stock['previousGrade']} to {stock['rating']}\n"
+                    message += f"{stock['symbol']} - {stock['gradingCompany']} upgraded from {stock['previousGrade']} to {stock['newGrade']}\n"
 
                 # Log to file
                 log_file = f"stock_grade_changes_{datetime.now().date()}.txt"
@@ -54,6 +55,7 @@ def fetch_stock_grade_changes():
 
 def send_email(subject, body):
     """Sends an email notification with stock grade changes."""
+    print("Sending Email to client... ")
     try:
         msg = MIMEText(body)
         msg["Subject"] = subject
