@@ -1,9 +1,6 @@
 import unittest
 from unittest.mock import patch, MagicMock
-import json
-import requests
 import os
-from datetime import datetime
 import sys
 sys.path.insert(0, ".")
 from bull_signal_bot import fetch_stock_grade_changes, send_email
