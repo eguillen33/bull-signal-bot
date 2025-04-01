@@ -50,7 +50,7 @@ class TestBullSignalBot(unittest.TestCase):
             
         mock_print.assert_any_call("No stock grade changes today.")
         
-        
+    
     @patch("bull_signal_bot.requests.get")
     def test_fetch_stock_grade_changes_api_failure(self, mock_requests_get):
         """Test API failure handling in fetch_stock_grade_changes."""
@@ -65,7 +65,7 @@ class TestBullSignalBot(unittest.TestCase):
         # Check the exact expected output
         mock_print.assert_any_call("Failed to retrieve stock grade changes. Status Code: 500")
 
-        
+    
     @patch("bull_signal_bot.smtplib.SMTP_SSL")
     def test_send_email_success(self, mock_smtp):
         """Test sending an email successfully."""
