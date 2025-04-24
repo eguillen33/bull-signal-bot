@@ -19,9 +19,9 @@ spec:
         image: edguillen/bull-signal-bot:latest
         ports:
         - containerPort: 80
-      envFrom:
-      - secretRef:
-          name: bull-signal-bot-secrets
+        envFrom:
+        - secretRef:
+            name: bull-signal-bot-secrets
 ---
 apiVersion: v1
 kind: Service
