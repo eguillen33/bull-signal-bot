@@ -63,7 +63,6 @@ def send_email(subject, body):
         msg["To"] = EMAIL_RECEIVER
 
         with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
-            server.starttls()
             server.login(EMAIL_SENDER, EMAIL_PASSWORD)
             server.send_message(msg)
 
