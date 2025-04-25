@@ -15,10 +15,10 @@ from email.mime.text import MIMEText
 from datetime import datetime
 
 # Configuration
-API_KEY = os.environ["FMP_API_KEY"]
-EMAIL_SENDER = os.environ["EMAIL"]
-EMAIL_RECEIVER = os.environ["EMAIL"]
-EMAIL_PASSWORD = os.environ["EMAIL_PASSWORD"]
+API_KEY: str = os.environ["FMP_API_KEY"]
+EMAIL_SENDER: str = "id4eguillen@gmail.com"
+EMAIL_RECEIVERS: str = os.environ["EMAILS"]
+EMAIL_PASSWORD:str = os.environ["EMAIL_PASSWORD"]
 
 
 def fetch_stock_grade_changes():
@@ -28,7 +28,6 @@ def fetch_stock_grade_changes():
         response = requests.get(url, timeout=(5))
         if response.status_code == 200:
             data = response.json()
-            print(json.dumps(data, indent=3))
             grade_changes = [item for item in data if item.get('newGrade') != item.get('previousGrade')]
             
             if grade_changes:
@@ -55,18 +54,17 @@ def fetch_stock_grade_changes():
 
 def send_email(subject, body):
     """Sends an email notification with stock grade changes."""
-    print("Sending Email to client... ")
+    print("Sending Email to clients... ")
     try:
         msg = MIMEText(body)
         msg["Subject"] = subject
         msg["From"] = EMAIL_SENDER
-        msg["To"] = EMAIL_RECEIVER
 
         with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
             server.login(EMAIL_SENDER, EMAIL_PASSWORD)
-            server.send_message(msg)
-
-        print("Email sent!")
+            for EMAIL_RECEIVER in EMAIL_RECEIVERS.split(","):
+                server.send_message(msg)
+                print("Email sent to", EMAIL_RECEIVER)
 
     except Exception as e:
         print(f"Failed to send email: {e}")

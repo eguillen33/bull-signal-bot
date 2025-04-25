@@ -34,6 +34,7 @@ class TestBullSignalBot(unittest.TestCase):
         mock_file().write.assert_called_once_with(
             "Stock Grade Changes Today:\n\nAAPL - Goldman Sachs upgraded from Hold to Buy\nGOOG - Morgan Stanley upgraded from Sell to Hold\n"
         )
+
         
     @patch("bull_signal_bot.requests.get")  # Mock API requests
     @patch("bull_signal_bot.send_email")    # Mock email function
@@ -49,6 +50,7 @@ class TestBullSignalBot(unittest.TestCase):
             fetch_stock_grade_changes()
             
         mock_print.assert_any_call("No stock grade changes today.")
+
         
     @patch("bull_signal_bot.requests.get")
     def test_fetch_stock_grade_changes_api_failure(self, mock_requests_get):
@@ -63,6 +65,7 @@ class TestBullSignalBot(unittest.TestCase):
         
         # Check the exact expected output
         mock_print.assert_any_call("Failed to retrieve stock grade changes. Status Code: 500")
+
         
     @patch("bull_signal_bot.requests.get", side_effect=Exception("Connection timed out"))
     def test_fetch_stock_grade_changes_timeout(self, mock_requests_get):
@@ -70,6 +73,7 @@ class TestBullSignalBot(unittest.TestCase):
         with patch("builtins.print") as mock_print:
             fetch_stock_grade_changes()
         mock_print.assert_any_call("Error fetching stock grade changes: Connection timed out")
+
 
     @patch("bull_signal_bot.smtplib.SMTP_SSL")
     def test_send_email_success(self, mock_smtp):
@@ -80,9 +84,10 @@ class TestBullSignalBot(unittest.TestCase):
         
         send_email("Test Subject", "Test Body")
         
-        mock_server.login.assert_called_once_with(os.environ["EMAIL"], os.environ["EMAIL_PASSWORD"])
-        mock_server.send_message.assert_called_once()
-    
+        mock_server.login.assert_called_once_with(str(os.environ["EMAILS"]).split(",")[0], os.environ["EMAIL_PASSWORD"])
+        assert mock_server.send_message.call_count == 2
+        
+            
     @patch("bull_signal_bot.smtplib.SMTP_SSL")
     def test_send_email_failure(self, mock_smtp):
         """Test handling failure when sending an email."""
