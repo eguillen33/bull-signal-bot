@@ -175,3 +175,4 @@ cython_debug/
 
 # Unit test file outputs
 stock_grade_changes*.txt
+test-connection.py
