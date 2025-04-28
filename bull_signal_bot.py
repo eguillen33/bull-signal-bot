@@ -10,7 +10,6 @@ Description: This script fetches daily stock grade changes from a financial API
 import requests
 import smtplib
 import os
-import json
 from email.mime.text import MIMEText
 from datetime import datetime
 
@@ -18,7 +17,7 @@ from datetime import datetime
 API_KEY: str = os.environ["FMP_API_KEY"]
 EMAIL_SENDER: str = "id4eguillen@gmail.com"
 EMAIL_RECEIVERS: str = os.environ["EMAILS"]
-EMAIL_PASSWORD:str = os.environ["EMAIL_PASSWORD"]
+EMAIL_PASSWORD: str = os.environ["EMAIL_PASSWORD"]
 
 
 def fetch_stock_grade_changes():
