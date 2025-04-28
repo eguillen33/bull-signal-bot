@@ -55,15 +55,18 @@ def send_email(subject, body):
     """Sends an email notification with stock grade changes."""
     print("Sending Email to clients... ")
     try:
-        msg = MIMEText(body)
-        msg["Subject"] = subject
-        msg["From"] = EMAIL_SENDER
-
         with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
             server.login(EMAIL_SENDER, EMAIL_PASSWORD)
-            for EMAIL_RECEIVER in EMAIL_RECEIVERS.split(","):
+            
+            for email_receiver in EMAIL_RECEIVERS.split(","):
+                email_receiver = email_receiver.strip()
+                msg = MIMEText(body)
+                msg["Subject"] = subject
+                msg["From"] = EMAIL_SENDER
+                msg["To"] = email_receiver
+                
                 server.send_message(msg)
-                print("Email sent to", EMAIL_RECEIVER)
+                print("Email sent to", email_receiver)
 
     except Exception as e:
         print(f"Failed to send email: {e}")
