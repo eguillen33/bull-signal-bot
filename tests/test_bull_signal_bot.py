@@ -5,6 +5,7 @@ import sys
 sys.path.insert(0, ".")
 from bull_signal_bot import fetch_stock_grade_changes, send_email
 
+
 class TestBullSignalBot(unittest.TestCase):
     
     @patch("bull_signal_bot.requests.get")  # Mock API requests
@@ -40,7 +41,9 @@ class TestBullSignalBot(unittest.TestCase):
         """Test fetch_stock_grade_changes with a successful API response."""
 
         # Simulated API response
-        mock_response_data = []
+        mockHandling a major incident gracefully (upper management loves these)
+
+_response_data = []
         mock_requests_get.return_value.status_code = 200
         mock_requests_get.return_value.json.return_value = mock_response_data
         
@@ -99,6 +102,7 @@ class TestBullSignalBot(unittest.TestCase):
             send_email("Test Subject", "Test Body")
 
         mock_print.assert_any_call("Failed to send email: SMTP connection error")
-        
+
+
 if __name__ == "__main__":
     unittest.main()
