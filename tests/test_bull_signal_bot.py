@@ -41,9 +41,7 @@ class TestBullSignalBot(unittest.TestCase):
         """Test fetch_stock_grade_changes with a successful API response."""
 
         # Simulated API response
-        mockHandling a major incident gracefully (upper management loves these)
-
-_response_data = []
+        mock_response_data = []
         mock_requests_get.return_value.status_code = 200
         mock_requests_get.return_value.json.return_value = mock_response_data
         
