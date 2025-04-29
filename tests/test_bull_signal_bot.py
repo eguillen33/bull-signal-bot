@@ -76,20 +76,22 @@ class TestBullSignalBot(unittest.TestCase):
         """Test sending an email successfully with multiple recipients."""
         mock_server = MagicMock()
         mock_smtp_ssl.return_value.__enter__.return_value = mock_server
-
-        os.environ["EMAIL_RECEIVERS"] = "test1@example.com,test2@example.com"
-        os.environ["EMAIL_SENDER"] = "sender@example.com"
-        os.environ["EMAIL_PASSWORD"] = "dummy-password"
+        
+        with patch.dict(os.environ, {
+            "EMAIL_SENDER": "sender@example.com",
+            "EMAIL_PASSWORD": "dummy-password",
+            "EMAIL_RECEIVERS": "test1@example.com,test2@example.com"}):
+            send_email("Subject", "Body")
 
         send_email("Test Subject", "Test Body")
 
         mock_server.login.assert_called_once_with("sender@example.com", "dummy-password")
-        assert mock_server.send_message.call_count == 2
+        self.assertEqual(mock_server.send_message.call_count, 2)
 
         # Verify each message sent has the correct "To" field
         sent_messages = [call_args[0][0] for call_args in mock_server.send_message.call_args_list]
         recipients = [msg["To"] for msg in sent_messages]
-        assert set(recipients) == {"test1@example.com", "test2@example.com"}
+        self.assertSetEqual(set(recipients) == {"test1@example.com", "test2@example.com"})
 
     @patch("bull_signal_bot.smtplib.SMTP_SSL")
     def test_send_email_failure(self, mock_smtp_ssl):
