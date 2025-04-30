@@ -84,8 +84,6 @@ class TestBullSignalBot(unittest.TestCase):
         }):
             send_email("Subject", "Body")
 
-        send_email("Test Subject", "Test Body")
-
         mock_server.login.assert_called_once_with("sender@example.com", "dummy-password")
         self.assertEqual(mock_server.send_message.call_count, 2)
 
