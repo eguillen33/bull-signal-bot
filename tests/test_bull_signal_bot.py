@@ -80,7 +80,8 @@ class TestBullSignalBot(unittest.TestCase):
         with patch.dict(os.environ, {
             "EMAIL_SENDER": "sender@example.com",
             "EMAIL_PASSWORD": "dummy-password",
-            "EMAIL_RECEIVERS": "test1@example.com,test2@example.com"}):
+            "EMAIL_RECEIVERS": "test1@example.com,test2@example.com"
+        }):
             send_email("Subject", "Body")
 
         send_email("Test Subject", "Test Body")
