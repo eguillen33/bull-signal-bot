@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "bull-signal-bot.fullname" . }}
+  labels:
+    app: {{ include "bull-signal-bot.name" . }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ include "bull-signal-bot.name" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "bull-signal-bot.name" . }}
+    spec:
+      containers:
+        - name: bull-signal-bot
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          env: {{ toYaml .Values.env | nindent 12 }}

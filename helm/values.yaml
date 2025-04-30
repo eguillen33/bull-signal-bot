@@ -1,3 +1,29 @@
+replicaCount: 1
+
 image:
   repository: eguillen33/bull-signal-bot
   tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 80
+
+env:
+  - name: FMP_API_KEY
+    valueFrom:
+      secretKeyRef:
+        name: bull-signal-secrets
+        key: FMP_API_KEY
+
+  - name: EMAILS
+    valueFrom:
+      secretKeyRef:
+        name: bull-signal-secrets
+        key: EMAILS
+
+  - name: EMAIL_PASSWORD
+    valueFrom:
+      secretKeyRef:
+        name: bull-signal-secrets
+        key: EMAIL_PASSWORD
