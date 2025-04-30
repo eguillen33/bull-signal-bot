@@ -127,6 +127,25 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ vars.DEFAULT_REGION }}
+
+      - name: Setup kubectl
+        uses: azure/setup-helm@v3
+
+      - name: Setup Helm
+        uses: azure/setup-helm@v3
+
+      - name: Update kubeconfig for EKS
+        run: |
+          aws eks update-kubeconfig \
+            --region ${{ vars.DEFAULT_REGION }} \
+            --name ${{ vars.EKS_CLUSTER_NAME }}
+
       - name: Deploy Application
         run: echo "Deploying application..."
 
@@ -141,3 +160,11 @@ jobs:
 
       - name: Push Docker Image to Docker Hub
         run: docker push ${{ secrets.DOCKERHUB_USERNAME }}/bull-signal-bot:latest
+
+      - name: Deploy with Helm
+        run: |
+          helm upgrade --install bull-signal-bot ./helm \
+            --namespace bull-signal-bot \
+            --create-namespace \
+            --set image.repository=${{ secrets.DOCKERHUB_USERNAME }}/bull-signal-bot \
+            --set image.tag=latest
