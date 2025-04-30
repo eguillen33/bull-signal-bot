@@ -15,7 +15,7 @@ from datetime import datetime
 
 # Configuration
 API_KEY: str = os.environ["FMP_API_KEY"]
-EMAIL_SENDER: str = "id4eguillen@gmail.com"
+EMAIL_SENDER: str = os.environ["EMAIL_SENDER"]
 EMAIL_RECEIVERS: str = os.environ["EMAILS"]
 EMAIL_PASSWORD: str = os.environ["EMAIL_PASSWORD"]
 

@@ -85,8 +85,9 @@ jobs:
       - name: Run tests
         env:
           FMP_API_KEY: ${{ secrets.FMP_API_KEY }}
-          EMAILS: ${{ secrets.EMAILS }}
-          EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+          EMAILS: 'test1@example.com,test2@example.com'
+          EMAIL_PASSWORD: 'dummy-password'
+          EMAIL_SENDER: 'sender@example.com'
           PYTHONPATH: ${{ github.workspace }}
         run: pytest tests/
 
