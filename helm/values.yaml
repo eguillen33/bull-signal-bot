@@ -11,16 +11,9 @@ service:
 
 envFromSecrets:
   - name: FMP_API_KEY
-    valueFrom:
-      secretKeyRef:
-        name: bull-signal-bot-secrets
-        key: FMP_API_KEY
-
+    key: FMP_API_KEY
   - name: EMAIL_PASSWORD
-    valueFrom:
-      secretKeyRef:
-        name: bull-signal-bot-secrets
-        key: EMAIL_PASSWORD
+    key: EMAIL_PASSWORD
 
 envFromConfigMap:
   - name: EMAILS
