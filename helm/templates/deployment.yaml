@@ -18,4 +18,20 @@ spec:
         - name: bull-signal-bot
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
-          env: {{ toYaml .Values.env | nindent 12 }}
+          env:
+          {{- range .Values.envFromSecrets }}
+            - name: {{ .name }}
+              valueFrom:
+                secretKeyRef:
+                  name: bull-signal-bot-secrets
+                  key: {{ .key }}
+          {{- end }}
+
+          {{- range .Values.envFromConfigMap }}
+            - name: {{ .name }}
+              valueFrom:
+                configMapKeyRef:
+                  name: bull-signal-bot-config
+                  key: {{ .key }}
+          {{- end }}
+

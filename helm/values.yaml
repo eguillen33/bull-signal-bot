@@ -9,21 +9,23 @@ service:
   type: ClusterIP
   port: 80
 
-env:
+envFromSecrets:
   - name: FMP_API_KEY
     valueFrom:
       secretKeyRef:
-        name: bull-signal-secrets
+        name: bull-signal-bot-secrets
         key: FMP_API_KEY
-
-  - name: EMAILS
-    valueFrom:
-      secretKeyRef:
-        name: bull-signal-secrets
-        key: EMAILS
 
   - name: EMAIL_PASSWORD
     valueFrom:
       secretKeyRef:
-        name: bull-signal-secrets
+        name: bull-signal-bot-secrets
         key: EMAIL_PASSWORD
+
+envFromConfigMap:
+  - name: EMAILS
+    key: EMAILS
+
+config:
+  EMAILS: "id4eguillen@gmail.com,edguillen87@hotmail.com"
+
