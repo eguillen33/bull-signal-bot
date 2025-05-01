@@ -18,7 +18,10 @@ envFromSecrets:
 envFromConfigMap:
   - name: EMAILS
     key: EMAILS
+  - name: EMAIL_SENDER
+    key: EMAIL_SENDER
 
 config:
   EMAILS: "id4eguillen@gmail.com,edguillen87@hotmail.com"
+  EMAIL_SENDER: "id4eguillen@gmail.com"
 

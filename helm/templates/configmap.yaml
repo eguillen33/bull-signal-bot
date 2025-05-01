@@ -7,3 +7,4 @@ metadata:
     app: {{ include "bull-signal-bot.name" . }}
 data:
   EMAILS: "{{ .Values.config.EMAILS }}"
+  EMAIL_SENDER: "{{ .Values.config.EMAIL_SENDER }}"
